@@ -18,7 +18,8 @@ public class Client {
         String line = fromSocket.readLine();
         toSocket.close();
         fromSocket.close();
-        socket.close();
+        //socket.close();
+        //just a check comment
     }
 
     public static void main(String[] args) {
