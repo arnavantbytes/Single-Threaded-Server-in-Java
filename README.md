@@ -1,128 +1,147 @@
 
-# Single Threaded Server-Client Application in Java
+# Single-Threaded Server-Client Application in Java
 
-This project demonstrates a basic single-threaded client-server architecture using Java. The server listens for incoming connections on a specified port, and the client establishes a connection to the server. Once connected, the client can send messages, and the server responds back.
+This project demonstrates a basic single-threaded client-server architecture using Java Sockets. The server listens for incoming connections, while the client connects, sends a message, and receives a response.
 
-## Project Structure
+## Table of Contents
 
-- **Server.java**: The server-side program that listens for incoming client connections and responds with a simple message.
-- **Client.java**: The client-side program that connects to the server, sends a message, and receives a response from the server.
+- [Introduction](#introduction)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Setup Instructions](#setup-instructions)
+- [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Introduction
+
+In this project, you will learn how to build a simple client-server model using Java. The server listens for client connections on a specified port and responds with a message once a client connects. This application is built using Java's `Socket` and `ServerSocket` classes to establish communication over the network.
 
 ## Features
 
-- Simple client-server communication using Java sockets.
-- Server listens for incoming connections on a specific port.
-- The client connects to the server and sends a message.
-- The server responds to the client with a predefined message.
-- Includes a timeout mechanism for the server's socket connection.
+- **Client-Server Communication**: The server listens for incoming client connections, and the client sends and receives messages.
+- **Timeout Mechanism**: The server has a timeout period for client connections.
+- **Looped Communication**: The client can send multiple messages, and the server will dynamically respond to each message.
+- **Terminal-Based Interaction**: This project runs through the command line in separate terminals for the client and server.
+
+## Project Structure
+
+```bash
+.
+├── src
+│   ├── Client.java
+│   ├── Client.class
+│   ├── Server.java
+│   └── Server.class
+└── README.md
+```
+
+- `Client.java`: The client-side source code.
+- `Client.class`: The compiled bytecode for the client.
+- `Server.java`: The server-side source code.
+- `Server.class`: The compiled bytecode for the server.
 
 ## Prerequisites
 
-- Java JDK (version 8 or higher) installed.
-- A text editor or IDE (e.g., VS Code, IntelliJ IDEA, etc.).
-- Basic knowledge of Java and networking.
+Ensure you have the following installed:
 
-## Getting Started
+- Java Development Kit (JDK) 8 or higher
+- A text editor or an IDE (IntelliJ IDEA, VS Code, etc.)
+- Basic understanding of Java and networking concepts
 
-### 1. Cloning the Repository
+## Setup Instructions
+
+### 1. Clone the Repository
+
+Use the following command to clone the repository:
 
 ```bash
 git clone https://github.com/arnavantbytes/Single-Threaded-Server-in-Java.git
-cd Single-Threaded-Server-In-Java
 ```
 
-### 2. Running the Server
+Navigate to the project directory:
 
-1. Navigate to the directory where the `Server.java` file is located.
-   
-   ```bash
-   cd src
-   ```
+```bash
+cd Single-Threaded-Server-in-Java/src
+```
 
-2. Compile the server code:
+### 2. Compile the Server and Client
 
-   ```bash
-   javac Server.java
-   ```
+In one terminal window, compile the server:
 
-3. Run the server:
+```bash
+javac Server.java
+```
 
-   ```bash
-   java Server
-   ```
+In a separate terminal window, compile the client:
 
-4. The server will start listening for incoming client connections on port `8010`.
+```bash
+javac Client.java
+```
 
-### 3. Running the Client
+### 3. Run the Server
 
-1. In a **new terminal** window, navigate to the directory where the `Client.java` file is located.
-   
-   ```bash
-   cd src
-   ```
+In the server terminal, run the server:
 
-2. Compile the client code:
+```bash
+java Server
+```
 
-   ```bash
-   javac Client.java
-   ```
+### 4. Run the Client
 
-3. Run the client:
+In the client terminal, run the client:
 
-   ```bash
-   java Client
-   ```
+```bash
+java Client
+```
 
-4. The client will connect to the server on `localhost:8010` and exchange a simple message.
+## Usage
 
-### 4. Output
+- **Server**: The server listens for incoming connections on port `8010`. Once a client connects, the server prints the connection details and responds with a message.
+- **Client**: The client connects to the server at `localhost:8010`, sends a message, and prints the server's response.
 
-- **Server Output:**
+### Sample Output
 
-   The server will print a message indicating that it is listening for a connection. Once the client connects, the server will display the client’s address and send a message back.
+- **Server**:
 
-   ```
-   Server is listening on port: 8010
-   Connected to /127.0.0.1:57984
-   ```
+```bash
+Server is listening on port: 8010
+Connected to /127.0.0.1:57984
+Received from client: Hello World from socket /127.0.0.1:57984
+```
 
-- **Client Output:**
+- **Client**:
 
-   The client will send a message to the server and print the server's response.
-
-   ```
-   Server says: Hello World from the server
-   ```
-
-## Code Overview
-
-### **Server.java**
-- **port = 8010**: The port on which the server listens for connections.
-- **ServerSocket socket = new ServerSocket(port)**: This creates a server socket bound to the specified port.
-- **socket.accept()**: The server waits for incoming connections and accepts them when a client connects.
-- **PrintWriter** and **BufferedReader**: Used to send a response to the client and receive messages from the client.
-
-### **Client.java**
-- **InetAddress address = InetAddress.getByName("localhost")**: The client connects to the server at the `localhost` address.
-- **Socket socket = new Socket(address, port)**: This creates a socket and connects to the server on the specified port.
-- **toSocket.println(...)**: The client sends a message to the server.
-- **fromSocket.readLine()**: The client receives a message from the server.
-
-## Customizing the Project
-
-- You can modify the port number in both `Server.java` and `Client.java` to experiment with different ports.
-- Modify the communication message between client and server by changing the text in the `PrintWriter` methods.
+```bash
+Type your message (type 'exit' to close):
+Hello, Server!
+Server says: Server received: Hello, Server!
+```
 
 ## Troubleshooting
 
-1. **Port Mismatch**: Ensure both client and server are using the same port (default is `8010`).
-2. **Server Timeout**: The server has a 30-second timeout for client connections. You can adjust this by modifying the `socket.setSoTimeout(30000)` line in the server code.
-3. **Firewall Issues**: If you're running the server and client on different machines, ensure that the firewall is not blocking the communication.
+1. **Port Mismatch**: Ensure the same port (`8010`) is used in both `Server.java` and `Client.java`.
+2. **Server Timeout**: The server waits for a client connection for 20 seconds before timing out. Modify the timeout value with `socket.setSoTimeout()` as needed.
+3. **Firewall Issues**: If running on different machines, ensure firewall settings allow communication on the specified port.
+4. **Permissions**: Ensure you have the necessary read/write permissions in the directory where the server and client are run.
 
 ## Contributing
 
-Feel free to submit issues, fork the repository, or send pull requests for any improvements or bug fixes.
+Contributions are welcome! Feel free to open issues, submit pull requests, or fork the repository for any improvements or bug fixes.
+
+To contribute:
+1. Fork the repository.
+2. Create your feature branch: `git checkout -b feature/AmazingFeature`.
+3. Commit your changes: `git commit -m 'Add some AmazingFeature'`.
+4. Push to the branch: `git push origin feature/AmazingFeature`.
+5. Open a pull request.
 
 ## License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+This README now includes the `.class` files as part of the project structure. Let me know if you need any further modifications!
